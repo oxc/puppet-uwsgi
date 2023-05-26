@@ -108,7 +108,7 @@ class uwsgi (
     $binary_directory    = $uwsgi::params::binary_directory,
     $config_file         = $uwsgi::params::config_file,
     $log_file            = $uwsgi::params::log_file,
-    $log_rotate          = $uwsgi::params::log_rotate,
+    Enum['yes', 'no', 'purge'] $log_rotate = $uwsgi::params::log_rotate,
     $app_directory       = $uwsgi::params::app_directory,
     $tyrant              = $uwsgi::params::tyrant,
     $install_pip         = $uwsgi::params::install_pip,
@@ -119,9 +119,6 @@ class uwsgi (
     $socket              = $uwsgi::params::socket,
     $emperor_options     = undef
 ) inherits uwsgi::params {
-
-    validate_re($log_rotate, '^yes$|^no$|^purge$')
-
     if ! defined(Package[$python_dev]) and $install_python_dev {
         package { $python_dev:
             ensure => present,
