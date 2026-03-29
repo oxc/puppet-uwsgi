@@ -38,12 +38,12 @@ define uwsgi::app (
     $environment_variables = undef
 ) {
 
-    file { "${::uwsgi::app_directory}/${title}.ini":
+    file { "${uwsgi::app_directory}/${title}.ini":
         ensure  => $ensure,
         owner   => $uid,
         group   => $gid,
         mode    => '0644',
         content => template($template),
-        require => Package[$::uwsgi::package_name]
+        require => Package[$uwsgi::package_name]
     }
 }
